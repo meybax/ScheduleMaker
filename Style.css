@@ -1,0 +1,52 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: "Helvitica", sans-serif;
+    text-align: center;
+    font-size: 30px;
+}
+
+button {
+    font-size: 22px;
+    border: none;
+    background-color: black;
+    color: lightgreen;
+    font-family: "Helvitica", sans-serif;
+    padding: 0;
+    margin: 0;
+    transition: transform .2s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+button:focus {
+    outline: 0;
+}
+
+.title {
+    margin-top: 50px;
+    font-size: 75px;
+    margin-bottom: 0px;
+    margin-left: 100px;
+}
+
+#header {
+    position: absolute;
+    margin-left: 20px;
+    top: 10px;
+}
+
+#submit {
+    color: aqua;
+    font-size: 20px;
+}
+
+#addActivity {
+    float: right;
+    margin-right: 100px;
+    margin-left: 0px;
+    font-size: 80px;
+}
+
