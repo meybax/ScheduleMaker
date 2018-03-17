@@ -26,6 +26,8 @@
 
                 var name = document.createElement("div");
                 name.appendChild(document.createTextNode("[Name]"));
+                name.style.fontSize = "40px";
+                name.style.color = "springgreen";
                 activity.appendChild(name);
 
                 var start = document.createElement("div");
@@ -157,6 +159,8 @@
 
                 var formDiv = document.createElement("div");
                 formDiv.appendChild(form);
+                formDiv.style.color = "gray";
+                formDiv.style.fontSize = "20px";
                 activity.appendChild(formDiv);
 
                 var listElement = document.createElement("li");
@@ -262,11 +266,29 @@
             }
 
             function openSummary() {
-                var wnd = window.open("Summary.html");
-                wnd.document.body.write(
-                    "" +
-                    "" +
-                    ""
+                var wnd = window.open("");
+                wnd.document.write(
+                    "<head>" +
+                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"Style.css\">" +
+                    "<title>Schedule Summary</title>" +
+                    "</head>" +
+                    "<body>" +
+                    "<h1>Schedule Summary</h1>" +
+                    "<ol style=\"text-align: left\">"
+                );
+                var list = document.getElementById("activityList");
+                var b = list.getElementsByTagName("LI");
+                for (var i = 0; i < b.length; i++) {
+                    wnd.document.write("<li style=\"margin-top: 20px\">" +
+                        b[i].getElementsByTagName("div")[1].innerHTML +
+                        " &rarr; " +
+                        b[i].getElementsByTagName("div")[2].innerHTML +
+                        "</li>"
+                    );
+                }
+                wnd.document.write(
+                    "</ol>" +
+                    "</body>"
                 );
             }
 
@@ -285,7 +307,7 @@
         <button id="addActivity" type="button" onclick="createActivity()">+</button>
 
         <h1 class="title">Schedule Maker</h1>
-        <button type="button" onclick="openSummary()" style="color:orange;margin-left: 100px">View Summary</button>
+        <button type="button" onclick="openSummary()" style="color:orange;margin-left: 150px">View Summary</button>
         <ul id="activityList" style="list-style-type:none;padding:0;text-align:center"></ul>
     </body>
 
