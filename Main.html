@@ -6,10 +6,10 @@
         <link rel="stylesheet" type="text/css" href="Style.css">
         <meta charset="UTF-8">
 
-        <script>
+        <script> // Javascript Code ----------------------------------------------------------------------------------->
 
+            // plays audio when plus is clicked
             var click1 = new Audio("Sound/Click1.mp3");
-
             function play1() {
                 if (click1.paused) {
                     click1.play();
@@ -18,28 +18,32 @@
                 }
             }
 
+            // function for creating a new activity -------------------------------------------------------------->
             function createActivity() {
-                // activity creation
+                // initializes division for activity
                 play1();
                 var activity = document.createElement("div");
-                activity.id = "activity";
+                activity.style.marginTop = "20px";
 
+                // creates division for displaying name of activity
                 var name = document.createElement("div");
                 name.appendChild(document.createTextNode("[Name]"));
                 name.style.fontSize = "40px";
                 name.style.color = "springgreen";
                 activity.appendChild(name);
 
+                // creates divison for displaying start time of activity
                 var start = document.createElement("div");
                 start.appendChild(document.createTextNode("Start Time \273 [Start Time]"));
                 activity.appendChild(start);
 
+                // creates division for displaying duration of activity
                 var duration = document.createElement("div");
                 duration.appendChild(document.createTextNode("Duration \273 [Duration]"));
                 duration.id = "duration";
                 activity.appendChild(duration);
 
-                //activity functions
+                // creates button to allow edits
                 var edit = document.createElement("button");
                 edit.appendChild(document.createTextNode("Edit"));
                 edit.id = "edit";
@@ -47,39 +51,38 @@
                 edit.style.marginTop = "5px";
                 edit.style.marginRight = "20px";
                 edit.onclick = function () {
-                    if (formDiv.display == "none") {
+                    // when button is clicked, displays input form for name and start time
+                    if (formDiv.display == "none") {    // if form is not displayed, display
                         formDiv.display = "inline";
                         activity.appendChild(formDiv);
+                        // ensures submit button is not highlighted incorrectly
                         if (submit.style.backgroundColor == "lightseagreen") {
                             submit.style.backgroundColor = "black";
                         }
-                    } else {
+                    } else {    // if form is displayed, hide display
                         formDiv.display = "none";
                         formDiv.remove();
                     }
                 };
 
+                // creates button to remove activity from activity list
                 var remove = document.createElement("button");
                 remove.appendChild(document.createTextNode("Remove"));
                 remove.id = "remove";
                 remove.style.color = "red";
-                remove.onclick = function () {
-                    listElement.remove()
-                };
+                remove.onclick = function () {listElement.remove()};
 
+                // adds edit and remove buttons to activity division
                 activity.appendChild(edit);
                 activity.appendChild(remove);
 
-                activity.style.marginTop = "20px";
-                activity.id = start.innerHTML;
-
-                // submission form
+                // submission form -------------------------------------------------------------------------->
                 var form = document.createElement("form");
-                form.addEventListener("submit", function (event) {
+                form.addEventListener("submit", function (event) { // blocks normal submission method
                     event.preventDefault();
                 });
 
-                // name input
+                // creates field for name input
                 form.appendChild(document.createTextNode("Name: "));
                 var nameInput = document.createElement("input");
                 nameInput.type = "text";
@@ -88,90 +91,99 @@
                 form.appendChild(nameInput);
                 form.appendChild(document.createElement("div"));
 
-                // start time input
+                // input for start time ---------------------------------------------------------------->
                 form.appendChild(document.createTextNode("Start Time \273 "));
 
-                // selection for start hour
+                // selection for start hour (drop down list)
                 var startHour = document.createElement("select");
                 startHour.id = "startHour";
                 var hourOptions = [];
-                for (var i = 0; i <= 9; i++) {
-                    hourOptions.push("0" + i);
+                for (var i = 0; i <= 9; i++) {  // systematically creates options for hours
+                    hourOptions.push("0" + i);  // adds "0" in front of single digit numbers
                 }
                 for (var i = 10; i <= 23; i++) {
                     hourOptions.push("" + i);
                 }
-                for (var i = 0; i < hourOptions.length; i++) {
+                for (var i = 0; i < hourOptions.length; i++) {  // adds hour options to selection list
                     var option = document.createElement("option");
                     option.value = hourOptions[i];
                     option.text = hourOptions[i];
                     startHour.appendChild(option);
                 }
-                form.appendChild(startHour);
+                form.appendChild(startHour);    // adds start hour selection to submission form
 
+                // adds colon between start hour selection and minute with formatting
                 var colon = document.createElement("p");
                 colon.appendChild(document.createTextNode(" : "));
                 colon.style.fontSize = "15px";
                 colon.style.display = "inline";
                 form.appendChild(colon);
 
-                // selection for start min
+                // selection for start min (drop down list)
                 var startMin = document.createElement("select");
                 startMin.id = "startMin";
                 var minOptions = [];
-                for (var i = 0; i <= 9; i++) {
-                    minOptions.push("0" + i);
+                for (var i = 0; i <= 9; i++) {  // systematically creates options for minutes
+                    minOptions.push("0" + i);   // adds "0" in front of single digit numbers
                 }
                 for (var i = 10; i <= 59; i++) {
                     minOptions.push("" + i);
                 }
-                for (var i = 0; i < minOptions.length; i++) {
+                for (var i = 0; i < minOptions.length; i++) {   // adds minute options to list
                     var option = document.createElement("option");
                     option.value = minOptions[i];
                     option.text = minOptions[i];
                     startMin.appendChild(option);
                 }
-                form.appendChild(startMin);
+                form.appendChild(startMin); // adds start minute to submission form
+                // end input for start time <------------------------------------------------------------
 
-                form.appendChild(document.createElement("div"));
+                form.appendChild(document.createElement("div"));    // adds blank line for spacing
 
-                // submit button
+                // creates submit button
                 var submit = document.createElement("button");
                 submit.type = "button";
                 submit.innerHTML = "Submit";
                 submit.id = "submit";
                 submit.onclick = function () {
-                    if (document.getElementById("nameInput").value != "") {
-                        name.innerHTML = document.getElementById("nameInput").value;
+                    // function for submitting form
+                    if (nameInput.value != "") { // ignores empty names
+                        name.innerHTML = nameInput.value;
                     }
+                    // updates start time based on values in input fields
                     start.innerHTML = "Start Time \273 ";
                     start.innerHTML += startHour.value + ":";
                     start.innerHTML += startMin.value;
 
+                    // defines id of the activity list element to be the start time (for sorting)
                     listElement.id = startHour.value + "" + startMin.value;
 
+                    // hides submission field
                     formDiv.display = "none";
                     formDiv.remove();
 
-                    sortList();
+                    sortList(); // sorts list of activities after start time is (potentially) changed
                 };
-                form.appendChild(submit);
+                form.appendChild(submit);   // adds submit button to form
 
+                // creates division for form and adds it to activity
                 var formDiv = document.createElement("div");
                 formDiv.appendChild(form);
                 formDiv.style.color = "gray";
                 formDiv.style.fontSize = "20px";
                 activity.appendChild(formDiv);
+                // end of submission form <-------------------------------------------------------------------
 
+                // creates list element for activity
                 var listElement = document.createElement("li");
-                listElement.appendChild(document.createElement("hr"));
-                listElement.appendChild(activity);
-                listElement.id = startHour.value + "" + startMin.value;
-                document.getElementById("activityList").appendChild(listElement);
-                sortList();
-            }
+                listElement.appendChild(document.createElement("hr"));  // adds division between activities
+                listElement.appendChild(activity);  // adds activity to list element
+                listElement.id = startHour.value + "" + startMin.value; // intializes listElement id as start time
+                document.getElementById("activityList").appendChild(listElement);   // adds list element to activity list
+                sortList(); // sorts list after new activity is created
+            } // end of Create Activity function <-----------------------------------------------------------------
 
-            // utilized bubble sort
+            // bubble sort for sorting list
             function sortList() {
                 var list, i, switching, b, shouldSwitch;
                 list = document.getElementById("activityList");
@@ -188,9 +200,11 @@
                         shouldSwitch = false;
                         /*check if the next item should
                         switch place with the current item:*/
+                        // uses ID of list element to know start time, first 4 characters represent start time
+                        // 1230 is 12:30, 1529 is 15:20, etc.
                         if (parseInt(b[i].id.substring(0, 4)) > parseInt(b[i + 1].id.substring(0, 4))) {
                             /*if next item is before the
-                            current item, mark as a switch
+                            current item based on start time, mark as a switch
                             and break the loop:*/
                             shouldSwitch = true;
                             break;
@@ -203,59 +217,70 @@
                         switching = true;
                     }
                 }
+
                 // updates duration of each activity after sorting
                 var hourDifference, minDifference, hourDifferenceStr, minDifferenceStr
                 for (i = 0; i < b.length; i++) {
-                    if (i == b.length - 1) {
+                    if (i == b.length - 1) {    // hides duration for last activity
                         b[i].getElementsByTagName("div")[3].style.display = "none";
                     } else {
                         b[i].getElementsByTagName("div")[3].style.display = "block";
+                        // calculates duration through difference
                         hourDifference = parseInt(b[i + 1].id.substring(0, 2)) - parseInt(b[i].id.substring(0, 2));
                         minDifference = parseInt(b[i + 1].id.substring(2, 4)) - parseInt(b[i].id.substring(2, 4));
+                        // carries over number
                         if (minDifference < 0) {
                             minDifference = 60 + minDifference;
                             hourDifference--;
                         }
+                        // concatenates differences for durations into strings
                         hourDifferenceStr = hourDifference + "";
                         minDifferenceStr = minDifference + "";
+                        // adds zero for single digit numbers to ensure correct comparison with list element IDs
                         if (hourDifference < 10) {hourDifferenceStr = "0" + hourDifferenceStr};
                         if (minDifference < 10) {minDifferenceStr = "0" + minDifferenceStr};
+                        // changes duration based on time differences (3rd div element is duration)
                         b[i].getElementsByTagName("div")[3].innerHTML = "Duration \273 " + hourDifferenceStr + ":" + minDifferenceStr;
                     }
                 }
             }
 
-            setInterval(updateCurrentActivity, 10);
-
+            // highlights the current activity
+            setInterval(updateCurrentActivity, 10); // checks every 10 milliseconds
             function updateCurrentActivity() {
                 var list = document.getElementById("activityList");
                 var a = list.getElementsByTagName("LI");
 
+                // initializes variables for current time
                 var d = new Date();
                 var h = "" + d.getHours();
                 if (h < 10) {
-                    h = "0" + h
+                    h = "0" + h;    // adds "0" for single digit numbers
                 }
                 var m = "" + d.getMinutes();
                 if (m < 10) {
-                    m = "0" + m
+                    m = "0" + m;    // adds "0" for single digit numbers
                 }
                 var i = 0;
+                // loops until finding current time
                 while (i < (a.length - 1)) {
+                    // compares start time to current time to find which activity is current
                     if (parseInt(a[i + 1].id.substring(0, 4)) > parseInt(h + "" + m)) {
                         break;
                     }
                     i++;
                 }
-                if (parseInt(h + "" + m) >= parseInt(a[i].id.substring(0, 4))) {
+                // highlights current activity identified
+                if (parseInt(h + "" + m) >= parseInt(a[0].id.substring(0, 4))) {    // ensures time is not before the first activity
                     a[i].style.backgroundColor = "lightseagreen";
-                    var buttons = a[i].getElementsByTagName("button");
+                    var buttons = a[i].getElementsByTagName("button");  // updates all buttons as well as background
                     for (var j = 0; j < (buttons.length); j++) {
                         buttons[j].style.backgroundColor = "lightseagreen";
                     }
                 }
+                // un-highlights all activities not the current activity
                 for (var j = 0; j < (a.length); j++) {
-                    if (j != i && a[j].style.backgroundColor == "lightseagreen") {
+                    if ((j != i || parseInt(h + "" + m) < parseInt(a[0].id.substring(0, 4))) && a[j].style.backgroundColor == "lightseagreen") {
                         a[j].style.backgroundColor = "black";
                         var buttons = a[j].getElementsByTagName("button");
                         for (var q = 0; q < (buttons.length); q++) {
@@ -265,8 +290,10 @@
                 }
             }
 
+            // function for opening summary of activity
             function openSummary() {
                 var wnd = window.open("");
+                // writes HTML code for new summary page
                 wnd.document.write(
                     "<head>" +
                     "<link rel=\"stylesheet\" type=\"text/css\" href=\"Style.css\">" +
@@ -276,6 +303,7 @@
                     "<h1>Schedule Summary</h1>" +
                     "<ol style=\"text-align: left\">"
                 );
+                // for each element in the list, simplifies into name and start time
                 var list = document.getElementById("activityList");
                 var b = list.getElementsByTagName("LI");
                 for (var i = 0; i < b.length; i++) {
@@ -292,13 +320,16 @@
                 );
             }
 
+            // opens page for credits
             function openCredits() {
                 window.open("Credits.html");
             }
 
+        // end of Javascript <------------------------------------------------------------------------------------------
         </script>
     </head>
 
+    <!-- main body of html file -->
     <body>
         <div id="header">
             <button type="button" onclick="openCredits()" style="color:mediumvioletred;font-size:20px">Credits</button>
